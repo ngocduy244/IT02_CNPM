@@ -3,7 +3,6 @@
 {% block title %}Đăng Nhập người dùng{% endblock %}
 
 {% block content %}
-<h1 class="text-center text-danger">Đăng Nhập người dùng</h1>
 <div class="container">
     <div class="row">
         {% if err_msg %}
@@ -12,21 +11,48 @@
         </div>
         {%endif%}
 
-        <form action="{{ url_for('login_my_user')}}" method="post" enctype="multipart/form-data">
-             <div class="mb-3 mt-3">
-                <label for="username" class="form-label">User name:</label>
-                <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Mật khẩu:</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-            </div>
+
+        <div class="container-form">
+            <div class="container-form_body">
+                <h1>Login</h1>
 
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                <form action="{{ url_for('login_my_user')}}" method="post" enctype="multipart/form-data">
+
+                    <div class="dropdown form-control">
+                        <div class="dropdown-select">
+                            <input type="text" class="selected-role" name="role">
+                            <span class="dropdown-selected">Select Item</span>
+                            <i class="fa fa-caret-down icon"></i>
+                        </div>
+
+                        <div class="dropdown-list">
+                            <div class="dropdown-list_item">ADMIN</div>
+                            <div class="dropdown-list_item">DOCTOR</div>
+                            <div class="dropdown-list_item">NURSE</div>
+                            <div class="dropdown-list_item">USER</div>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <input type="text" id="username" placeholder="Tên đăng nhập" name="username"/>
+                        <span></span>
+                        <small></small>
+                    </div>
+                    <div class="form-control">
+                        <input type="password" id="password" placeholder="Enter password" name="password"/>
+                        <span></span>
+                        <small></small>
+                    </div>
+
+                    <input type="submit" value="Login"/>
+                    <div class="signup_link">Not a member? <a href="#">Signup</a></div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
+<script src="{{url_for('static', filename='js/app.js')}}"></script>
 
 {% endblock %}

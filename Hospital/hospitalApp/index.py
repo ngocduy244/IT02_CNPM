@@ -82,15 +82,22 @@ def login_my_user():
     if request.method.__eq__("POST"):
         username = request.form.get("username")
         password = request.form.get("password")
-
-        user = dao.auth_user(username,password)
-        if user:
-            login_user(user=user)
-            if(current_user.user_role == UserRole.ADMIN):
-                return redirect('/admin')
-            return redirect(url_for('index'))
+        role = request.form.get("role")
+        if role == "":
+            err_msg = "Bạn phải chọn chức vụ"
+        elif username == "":
+            err_msg = "Bạn phải nhập tên đăng nhập"
+        elif password == "":
+            err_msg = "Bạn phải nhập mật khẩu"
         else:
-            err_msg="User name hoac passwork khong chinh xac"
+            user = dao.auth_user(username,password, role)
+            if user:
+                login_user(user=user)
+                if(current_user.user_role == UserRole.ADMIN):
+                    return redirect('/admin')
+                return redirect(url_for('index'))
+            else:
+                err_msg="User name hoac passwork khong chinh xac"
 
     return render_template('login.html', err_msg=err_msg)
 
