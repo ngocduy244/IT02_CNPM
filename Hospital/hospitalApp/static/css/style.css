@@ -1,0 +1,17 @@
+*{
+    font-family: Tahoma;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: lightblue;
+    color: darkblue;
+}
+
+h1{
+    text-align: center;
+}
+
+.banner{
+    padding: 0;
+}

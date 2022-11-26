@@ -1,0 +1,43 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<h1>Chào mừng đến với website bán hàng</h1>
+
+<div class="container">
+    {% if pages %}
+        <div> {{ pages }} </div>
+    {% endif %}
+
+    {% if dem %}
+        <div> {{ dem }} </div>
+    {% endif %}
+
+    {% if product %}
+    <div class="row">
+        {% for p in product %}
+        <div class="col-md-3 col-sm-12" style="padding: 1rem;">
+            <div class="card">
+                <img class="card-img-top" src="{{p.image}}" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{p.name}}</h4>
+                    <p class="card-text">{{"{:,.0f}".format(p.price)}}</p>
+                    <a href="{{url_for('details', product_id=p.id)}}" class="btn btn-primary">Xem chi tiết</a>
+                    <a href="#" class="btn btn-primary">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Không có sản phẩm</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
+
+
+
