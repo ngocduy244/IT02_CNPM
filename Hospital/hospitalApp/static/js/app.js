@@ -1,3 +1,4 @@
+// dropdown user role
 const dropdownItem = document.querySelectorAll(".dropdown-list_item")
 const dropdownSelect = document.querySelector(".dropdown-select")
 const dropdownSelected = document.querySelector(".dropdown-selected")
@@ -31,3 +32,4 @@ document.addEventListener("click", function(e){
         icon.classList.add("fa-caret-down")
     }
 })
+

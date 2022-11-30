@@ -1,16 +1,245 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+html {
+  box-sizing: border-box;
+}
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+input {
+  line-height: normal;
+}
+label,
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+/* using rem unit */
+:root{
+    --primary-color: linear-gradient(120deg, #3ca7ee, #9b408f);
 }
 
+html {
+  font-size: 62.5%;
+}
+a {
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
 body {
-	background: linear-gradient(120deg, #3ca7ee, #9b408f) no-repeat;
+  font-family: "Poppins", sans-serif;
+  background: var(--primary-color) no-repeat;
+  font-size: 1.6rem;
+  line-height: 1;
 }
 
+
+.header {
+    background-color: white;
+    transition: all 0.2s linear;
+}
+
+.header_body{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.header.is-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  animation: fade 0.25s forwards 1;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.logo img{
+    width: 200px
+}
+
+.logo .navbar-brand{
+    display: block;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin-bottom: 0;
+  flex: 1;
+  padding-left: 40px
+}
+.menu-item:nth-child(5) {
+    margin-left: auto;
+}
+.menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    position: relative;
+    padding: 10px 25px;
+}
+
+.menu-item-link{
+   margin-right: 25px;
+}
+
+.menu-item-link .menu-link-icon{
+    font-size: 15px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 7px 10px;
+    color: white;
+    background-color: rgb(58,59,60);
+}
+
+.menu-item-link:hover .menu-link-icon{
+    background-color: rgb(58,59,60, 0.9);
+}
+
+.line-effect {
+  width: 0;
+  height: 2px;
+  background-color: #3d6ef7;
+  position: fixed;
+  pointer-events: none;
+  transition: all 0.25s linear;
+}
+
+/* have user */
+.header__navbar-user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.header__navbar-user:hover .header__navbar-user-menu{
+    display: block;
+}
+
+.header__navbar-user-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__navbar-user-img{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 4px;
+    border: 1px solid #F05d41;
+}
+.header__navbar-user-name{
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.header__navbar-user-menu{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #EE4D2D;
+    border-radius: 2px;
+    width: 160px;
+    z-index: 100;
+    list-style-type: none;
+    padding-left: 0;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    display: none;
+    animation: fadeIn ease .4s;
+}
+
+.header__navbar-user-menu::after{
+    content: "";
+    display: block;
+    position: absolute;
+    height: 10px;
+    border-width: 10px;
+    border-style: solid;
+    bottom: 100%;
+    right: 18px;
+    border-color: transparent transparent #EE4D2D transparent;
+}
+
+.header__navbar-user-menu::before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    top: -10px;
+    right: 0;
+    left: 0;
+}
+
+.header__navbar-user-menu-item a:first-child{
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.header__navbar-user-menu-item a:last-child{
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.header__navbar-user-menu-item a{
+    text-decoration: none;
+    color: #000;
+    font-size: 1.4rem;
+    padding: 12px 16px;
+    display: block;
+}
+
+.header__navbar-user-menu-item a:hover{
+    background-color: #fafafa;
+}
+
+.header__navbar-user-menu-item--separate{
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+
+/* form login */
 .container-form{
     display: flex;
     justify-content: center;
@@ -38,6 +267,7 @@ form .form-control {
 	position: relative;
 	border-bottom: 2px solid #adadad;
 	margin: 40px 0;
+	font-size: 1.6rem;
 }
 
 .form-control.success {
@@ -51,7 +281,6 @@ form .form-control {
 .form-control input {
 	width: 100%;
 	height: 40px;
-	font-size: 16px;
 	border: none;
 	background: none;
 	outline: none;
