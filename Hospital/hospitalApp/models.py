@@ -162,7 +162,7 @@ class Product(BaseModel):
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        # db.create_all()
         # c1 = Category(name="Dien Thoai")
         # c2 = Category(name="May tính bảng")
         # c3 = Category(name="Phu kien")
@@ -170,12 +170,12 @@ if __name__ == '__main__':
         # db.session.add(c2)
         # db.session.add(c3)
 
-        # import hashlib
-        # password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest())
-        # u = User(name='Huu', username='Huu', password=password, user_role=UserRole.ADMIN, birthday= '2000', address='fff', phone='2214124',gender=Gender.Male,
-        #          avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
-        # db.session.add(u)
-        # db.session.commit()
+        import hashlib
+        password = str(hashlib.md5('1'.encode('utf-8')).hexdigest())
+        u = User(name='admin', username='admin', password=password, user_role=UserRole.ADMIN,  address='fff', phone='2214124',gender=Gender.Male,
+                 avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+        db.session.add(u)
+        db.session.commit()
 
 
         # pass

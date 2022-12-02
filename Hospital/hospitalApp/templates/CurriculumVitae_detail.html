@@ -5,27 +5,101 @@
 {% block content %}
 
 
-<div class="container">
-    <div class="my_CV">
-        <h1 class="subjects text-center">Hồ sơ lí lịch</h1>
-        <div class="my_CV-body">
-            <div class="my_CV-item">
-                {% if current_user.avatar %}
-                        <img  src="{{ current_user.avatar }}" alt="{{ current_user.name }}" class="my_CV-item_img">
-                {% else %}
-                        <img alt="{{ current_user.name }}" class="my_CV-item_img" src="{{url_for('static', filename='image/flask.png')}}">
-                {% endif %}
-            </div>
+<!--<div class="container">-->
+<!--    <div class="my_CV">-->
+<!--        <h1 class="subjects text-center">Hồ sơ lí lịch</h1>-->
+<!--        <div class="my_CV-body">-->
+<!--            <div class="my_CV-item">-->
+<!--                {% if current_user.avatar %}-->
+<!--                        <img  src="{{ current_user.avatar }}" alt="{{ current_user.name }}" class="my_CV-item_img">-->
+<!--                {% else %}-->
+<!--                        <img alt="{{ current_user.name }}" class="my_CV-item_img" src="{{url_for('static', filename='image/flask.png')}}">-->
+<!--                {% endif %}-->
+<!--            </div>-->
 
-            <div class="my_CV-item">
-                <h3 class="my_CV-item_name">Họ và tên: {{ user.name }}</h3>
-                <div class="my_CV-item_info">
-                    <div></div>
+<!--            <div class="my_CV-item">-->
+<!--                <h3 class="my_CV-item_name">Họ và tên: {{ user.name }}</h3>-->
+<!--                <div class="my_CV-item_info">-->
+<!--                    <div></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="{{ current_user.avatar }}"
+                             alt="{{ current_user.name }}"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Birthday</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.birthday }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.phone }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Gender</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.gender }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.address }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
                 </div>
             </div>
         </div>
-    </div>
-
-</div>
+</section>
 
 {% endblock %}
