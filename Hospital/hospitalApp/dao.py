@@ -67,6 +67,10 @@ def get_user_by_id(user_id):
     return User.query.get(user_id)
 
 
+def get_calendar_by_date():
+    return User.query.get(User.joined_date.contains("2022-11-25 00:00:00"))
+
+
 def count_products_id():
     return Product.query.filter(Product.category_id.contains(1)).count()
 

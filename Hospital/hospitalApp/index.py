@@ -34,6 +34,11 @@ def details(product_id):
     return render_template('product_detail.html', product=product)
 
 
+@app.route('/CurriculumVitae/<int:user_id>')
+def user_details(user_id):
+    user = dao.get_user_by_id(user_id)
+    return render_template('CurriculumVitae_detail.html', user=user)
+
 @app.route('/login-admin', methods=['post'])
 def login_admin():
     username = request.form['username']

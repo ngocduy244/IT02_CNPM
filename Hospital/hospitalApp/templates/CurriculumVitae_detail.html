@@ -1,0 +1,31 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="my_CV">
+        <h1 class="subjects text-center">Hồ sơ lí lịch</h1>
+        <div class="my_CV-body">
+            <div class="my_CV-item">
+                {% if current_user.avatar %}
+                        <img  src="{{ current_user.avatar }}" alt="{{ current_user.name }}" class="my_CV-item_img">
+                {% else %}
+                        <img alt="{{ current_user.name }}" class="my_CV-item_img" src="{{url_for('static', filename='image/flask.png')}}">
+                {% endif %}
+            </div>
+
+            <div class="my_CV-item">
+                <h3 class="my_CV-item_name">Họ và tên: {{ user.name }}</h3>
+                <div class="my_CV-item_info">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

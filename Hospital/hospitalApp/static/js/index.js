@@ -26,11 +26,9 @@ window.addEventListener("load", function(){
         console.log(scrollY)
         if(scrollY >= headerHeight){
             header.classList.add("is-fixed")
-            document.body.style.paddingTop = `${headerHeight}px`
         }
         else{
             header.classList.remove("is-fixed")
-            document.body.style.paddingTop = 0
         }
     }, 100))
 
