@@ -1,7 +1,9 @@
 import json
 from hospitalApp import app, db
-from hospitalApp.models import Category, Product, User
+from hospitalApp.models import Category, Product, User, MedicalCertificate, Rule
 import hashlib
+from datetime import datetime
+
 
 def load_category():
     # with open(f'{app.root_path}/data/category.json', encoding="UTF-8") as f:
@@ -36,6 +38,10 @@ def count_product():
     return Product.query.filter(Product.active.__eq__(True)).count()
 
 
+def get_rule_by_id(rule_id):
+    return Rule.query.get(rule_id)
+
+
 def get_product_by_id(product_id):
     return Product.query.get(product_id)
     # with open(f'{app.root_path}/data/product.json', encoding="UTF-8") as f:
@@ -67,8 +73,10 @@ def get_user_by_id(user_id):
     return User.query.get(user_id)
 
 
-def get_calendar_by_date():
-    return User.query.get(User.joined_date.contains("2022-11-25 00:00:00"))
+def load_medicalCertificate(date=None):
+    if date:
+        return MedicalCertificate.query.filter(MedicalCertificate.examines_date.contains(date))
+    return MedicalCertificate.query.all()
 
 
 def count_products_id():
@@ -76,3 +84,13 @@ def count_products_id():
 
 def count_user_date():
     return User.query.filter(User.joined_date.contains("2022-11-25 00:00:00")).count()
+
+
+def count_mc_date(date):
+    return MedicalCertificate.query.filter(MedicalCertificate.examines_date.contains(date)).count()
+
+
+def registerMC(date, symptom, user_id):
+    mc = MedicalCertificate(user_id=user_id, Symptom=symptom, examines_date=date)
+    db.session.add(mc)
+    db.session.commit()

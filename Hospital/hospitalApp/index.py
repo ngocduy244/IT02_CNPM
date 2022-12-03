@@ -1,10 +1,11 @@
+from datetime import datetime
 import math
 from flask import render_template, request, redirect, url_for
 from hospitalApp import app, dao, login
 from hospitalApp.admin import *
 from flask_login import login_user, logout_user
 import cloudinary.uploader
-
+from hospitalApp.models import  Rule
 
 @app.route('/')
 def index():
@@ -37,7 +38,12 @@ def details(product_id):
 @app.route('/CurriculumVitae/<int:user_id>')
 def user_details(user_id):
     user = dao.get_user_by_id(user_id)
-    return render_template('CurriculumVitae_detail.html', user=user)
+    date = datetime.date(datetime.today())
+    string = str(date)
+    mc = dao.load_medicalCertificate(string)
+    count = dao.count_mc_date(string)
+    rule = dao.get_rule_by_id(1)
+    return render_template('CurriculumVitae_detail.html', user=user,mc=mc,count=count, rule=rule)
 
 @app.route('/login-admin', methods=['post'])
 def login_admin():
@@ -50,6 +56,23 @@ def login_admin():
 
     return redirect('/admin')
 
+
+@app.route('/registerMC',methods=['get', 'post'])
+def register_PKB():
+    err_msg = ""
+    if request.method.__eq__("POST"):
+        date = request.form.get("date")
+        symptom = request.form.get("symptom")
+        user_id = request.form.get("user_id")
+        count = dao.count_mc_date(date)
+        rule = dao.get_rule_by_id(1)
+
+        if(count == rule.amount):
+            err_msg = "Số lường PKB đã vượt quá " + str(int(rule.amount)) + " người"
+        else:
+            dao.registerMC(date, symptom, user_id)
+            return redirect('/login')
+    return render_template('registerMC.html', err_msg=err_msg)
 
 @app.route('/register', methods=['get', 'post'])
 def register():
@@ -121,6 +144,7 @@ def logout_my_user():
 @login.user_loader
 def load_user(user_id):
     return dao.get_user_by_id(user_id=user_id)
+
 
 
 if __name__ == '__main__':

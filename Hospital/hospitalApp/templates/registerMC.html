@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng ký người dùng{% endblock %}
+
+{% block content %}
+{% if  current_user.is_authenticated and current_user.user_role.name == "USER" or  current_user.is_authenticated and current_user.user_role.name  == "Nurse" or current_user.user_role.name == "ADMIN"%}
+<h1 class="text-center text-danger">Đăng ký người dùng</h1>
+<div class="container">
+    <div class="row">
+        {% if err_msg %}
+        <div class="alert alert-danger">
+            <h4>{{err_msg}}</h4>
+        </div>
+        {%endif%}
+
+        <form action="{{ url_for('register_PKB')}}" method="post" enctype="multipart/form-data">
+
+
+             <div class="mb-3 mt-3">
+                <label for="name" class="form-label">Symptom:</label>
+                <input type="text" class="form-control" id="symptom" placeholder="Họ tên" name="symptom">
+            </div>
+
+              <div class="mb-3 mt-3">
+                <label for="name" class="form-label">User ID:</label>
+                  {% if current_user.user_role.name == "USER" %}
+                    <input type="text" class="form-control"  value="{{ current_user }}" name="user_id" readonly>
+                  {% elif current_user.user_role.name == "NURSE"%}
+                    <input type="text" class="form-control"  placeholder="Nhập mã bệnh nhân" name="user_id" readonly>
+                  {% elif current_user.user_role.name == "ADMIN"%}
+                    <input type="text" class="form-control"  placeholder="Nhập mã bệnh nhân" name="user_id" >
+                  {% endif %}
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="name" class="form-label">Ngày đến khám:</label>
+                <input type="date" class="form-control" id="name"  name="date">
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

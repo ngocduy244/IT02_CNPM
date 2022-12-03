@@ -31,17 +31,13 @@
 
 <section style="background-color: #eee;">
     <div class="container py-5">
-
-
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <img src="{{ current_user.avatar }}"
                              alt="{{ current_user.name }}"
-                             class="rounded-circle img-fluid" style="width: 150px;">
-
-
+                             class="rounded-circle img-fluid" style="width: 500px;">
                     </div>
                 </div>
 
@@ -55,6 +51,15 @@
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">{{ current_user.name }}</p>
+                            </div>
+                        </div>
+                         <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Role: </p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.user_role.name }}</p>
                             </div>
                         </div>
                         <hr>
@@ -81,7 +86,7 @@
                                 <p class="mb-0">Gender</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">{{ current_user.gender }}</p>
+                                <p class="text-muted mb-0">{{ current_user.gender.name }}</p>
                             </div>
                         </div>
                         <hr>
@@ -93,6 +98,28 @@
                                 <p class="text-muted mb-0">{{ current_user.address }}</p>
                             </div>
                         </div>
+                        {% if current_user.user_role.name != "USER" %}
+                         <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Qualification</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.qualification }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Joined Date: </p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ current_user.joined_date }}</p>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="row">
@@ -100,6 +127,26 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
+{% if calendar %}
+{% for c in calendar %}
+    {{ c.created_date }}
+        {% for p in c.medicalCertificate %}
+
+            <h1> {{ p.user.password }}</h1>
+
+        {% endfor %}
+
+{% endfor %}
+{% else %}
+    <h1>NO</h1>
+{% endif %}
+    {% for c in mc %}
+
+            {{ c.Symptom }}
+
+    {% endfor %}
 
 {% endblock %}

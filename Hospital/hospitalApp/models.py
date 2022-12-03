@@ -61,20 +61,27 @@ class Rule(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
     amount = Column(Float, nullable=False)
-    calendar = relationship('Calendar', backref='rule', lazy=True)
+    # calendar = relationship('Calendar', backref='rule', lazy=True)
     receipt = relationship('Receipt', backref='rule', lazy=True)
+    medicalCertificate = relationship('MedicalCertificate', backref='rule', lazy=True)
+
 
     def __str__(self):
         return self.name
 
 
-class Calendar(db.Model):
-    __tablename__ = 'calendar'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    created_date = Column(DateTime, default=datetime.date(datetime.today()))
-    rule_id = Column(Integer, ForeignKey(Rule.id), nullable=False)
-    medicalCertificate = relationship('MedicalCertificate', backref='calendar', lazy=True)
+# class Calendar(db.Model):
+#     __tablename__ = 'calendar'
+#
+#     name = Column(String(50), nullable=False)
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     created_date = Column(DateTime,default=datetime.date(datetime.today()), unique=True)
+#     rule_id = Column(Integer, ForeignKey(Rule.id), nullable=False)
+#     medicalCertificate = relationship('MedicalCertificate', backref='calendar', lazy=True)
+#
+#
+#     def __str__(self):
+#         return self.name
 
 
 class MedicalRecords(db.Model):
@@ -87,8 +94,9 @@ class MedicalCertificate(db.Model):
     created_date = Column(DateTime, default=datetime.date(datetime.today()))
     Symptom = Column(String(100), nullable=False)
     user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    calendar_id = Column(Integer, ForeignKey(Calendar.id), nullable=False)
-
+    # calendar_date = Column(DateTime, ForeignKey(Calendar.created_date), nullable=False)
+    rule_id = Column(Integer, ForeignKey(Rule.id), default=1 ,nullable=False)
+    examines_date = Column(DateTime, default=datetime.date(datetime.today()))
 
 
 class Medicine(db.Model):
@@ -163,7 +171,7 @@ class Product(BaseModel):
 if __name__ == '__main__':
     with app.app_context():
         # db.create_all()
-        # c1 = Category(name="Dien Thoai")
+        # c1 = Category(id=6,name="XX222X")
         # c2 = Category(name="May tính bảng")
         # c3 = Category(name="Phu kien")
         # db.session.add(c1)
@@ -172,7 +180,7 @@ if __name__ == '__main__':
 
         import hashlib
         password = str(hashlib.md5('1'.encode('utf-8')).hexdigest())
-        u = User(name='admin', username='admin', password=password, user_role=UserRole.ADMIN,  address='fff', phone='2214124',gender=Gender.Male,
+        u = User(name='admin', username='admin', password=password, birthday = datetime(2002,2,24),user_role=UserRole.ADMIN,  address='fff', phone='2214124',gender=Gender.Male,
                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
         db.session.add(u)
         db.session.commit()
