@@ -13,35 +13,30 @@
         </div>
         {%endif%}
 
-        <form action="{{ url_for('register_PKB')}}" method="post" enctype="multipart/form-data">
+        <form>
 
-
-             <div class="mb-3 mt-3">
-                <label for="name" class="form-label">Symptom:</label>
-                <input type="text" class="form-control" id="symptom" placeholder="Họ tên" name="symptom">
-            </div>
+<!--            <div class="mb-3 mt-3">-->
+<!--                <label for="name" class="form-label">Symptom:</label>-->
+<!--                <input type="text" class="form-control" id="symptom" placeholder="Họ tên" name="symptom">-->
+<!--            </div>-->
 
               <div class="mb-3 mt-3">
-                <label for="name" class="form-label">User ID:</label>
-                  {% if current_user.user_role.name == "USER" %}
-                    <input type="text" class="form-control"  value="{{ current_user }}" name="user_id" readonly>
-                  {% elif current_user.user_role.name == "NURSE"%}
-                    <input type="text" class="form-control"  placeholder="Nhập mã bệnh nhân" name="user_id" readonly>
-                  {% elif current_user.user_role.name == "ADMIN"%}
-                    <input type="text" class="form-control"  placeholder="Nhập mã bệnh nhân" name="user_id" >
-                  {% endif %}
+                  <label  class="form-label">User ID:</label>
+                    <input type="text" class="form-control user-id"  value="{{ current_user.id }}"  name="user_id" readonly>
             </div>
 
             <div class="mb-3 mt-3">
-                <label for="name" class="form-label">Ngày đến khám:</label>
-                <input type="date" class="form-control" id="name"  name="date">
+                <label for="examine_date" class="form-label">Ngày đến khám:</label>
+                <input type="date" class="form-control " id="examine_date"  name="date">
             </div>
 
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-success"  onclick="saveMC()"> Xác nhận </a>
         </form>
     </div>
 </div>
 
 {% endif %}
+<script src="{{url_for('static', filename='js/medicalCertificate.js')}}"></script>
+
 {% endblock %}

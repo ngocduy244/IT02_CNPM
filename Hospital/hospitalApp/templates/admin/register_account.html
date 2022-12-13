@@ -1,0 +1,83 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<style>
+    .register_form{
+        display:flex;
+        justify-content: space-between;
+    }
+
+
+
+
+</style>
+
+
+<h1 class="text-center text-success">THỐNG KÊ - BÁO CÁO</h1>
+
+{% if succ_msg %}
+<div class="alert alert-success">
+    <h4>{{succ_msg}}</h4>
+</div>
+{%endif%}
+
+<div class="register_form">
+    <div class="patient_info  col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="name">Họ tên:</label>
+            <input class="form-control" id="name" name="name" placeholder="Họ tên" type="text">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <span class="mr-4">Giới tính: </span>
+            <label class="form-label" for="Male" >Nam</label>
+            <input id="Male" name="gender" checked value="Nam" type="radio">
+            <label class="form-label ml-3" for="Female">Nữ</label>
+            <input id="Female" name="gender" value="Nữ" type="radio">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="birthday">Birthday:</label>
+            <input class="form-control" id="birthday" name="birthday" type="date">
+        </div>
+
+          <div class="mb-3 mt-3">
+            <label class="form-label" for="identity_card">Identity card:</label>
+            <input class="form-control" id="identity_card" name="identity_card" type="text">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="address">Address:</label>
+            <input class="form-control" id="address" name="address" type="text">
+        </div>
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="phone">Phone:</label>
+            <input class="form-control" id="phone" name="phone" placeholder="Enter phone" type="text">
+        </div>
+    </div>
+
+    <div class="user_info col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="username">User name:</label>
+            <input class="form-control" id="username" name="username" placeholder="Tên đăng nhập" type="text">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Mật khẩu:</label>
+            <input class="form-control" id="password" name="password" placeholder="Enter password" type="password">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="confirm">Nhập lại mật khẩu:</label>
+            <input class="form-control" id="confirm" name="confirm" placeholder="Enter confirm password"
+                   type="password">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="avatar">Avatar</label>
+            <input class="form-control" id="avatar" name="avatar" placeholder="Enter confirm password" type="file">
+        </div>
+        <button class="btn btn-primary col-lg-6 col-md-6 col-sm-6 col-xs-6" type="submit" onclick="register_account()">Submit</button>
+    </div>
+</div>
+
+<script src="{{url_for('static', filename='js/account.js')}}"></script>
+
+{% endblock %}

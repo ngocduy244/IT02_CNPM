@@ -1,0 +1,93 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<style>
+    .info_user,
+    .examine_date,
+    .btn-request{
+        display:flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .info_user label{
+        margin-bottom: 0;
+    }
+
+
+</style>
+
+{% if err_msg %}
+<div class="alert alert-danger">
+    <h4>{{err_msg}}</h4>
+</div>
+{%endif%}
+
+<h1 class="text-center text-success">Đăng kí phiếu khám bệnh</h1>
+
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <form>
+            <div class="info_user">
+                <label class="form-label col-lg-3 col-md-3 col-sm-3 col-xs-3">User ID:</label>
+                <input class="form-control user-id col-lg-9 col-md-9 col-sm-9 col-xs-9" name="user_id"
+                       placeholder="Nhập mã bệnh nhân" style="font-size: 14px" type="text">
+            </div>
+
+            <div class="examine_date mt-3 mb-3">
+                <label class="form-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="examine_date">Ngày khám:</label>
+                <input class="form-control col-lg-8 col-md-8 col-sm-8 col-xs-8" id="examine_date" name="date"
+                       type="date">
+            </div>
+
+            <div class="btn-request">
+                <a class="btn btn-success col-lg-4 col-md-4 col-sm-4 col-xs-4" onclick="checkUser()"> Kiểm tra </a>
+                <a class="btn btn-success col-lg-4 col-md-4 col-sm-4 col-xs-4 ml-1" onclick="saveMC()"> Xác nhận </a>
+            </div>
+        </form>
+
+        <table class="table col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-3" style="font-size: 13px;">
+            <tr class="">
+                <th cope="col">Mã bệnh nhân</th>
+                <th cope="col">Tên bệnh nhân</th>
+                <th cope="col">Giới tính</th>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <table class="table col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="font-size: 14px">
+            <thead>
+            <tr>
+                <th colspan="5" style="font-size: 20px">Danh sách khám bệnh</th>
+            </tr>
+            <tr>
+                <th colspan="5">{{date_today}}</th>
+            </tr>
+            <tr>
+                <th scope="col">Mã bệnh nhân</th>
+                <th scope="col">Họ tên</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Địa chỉ</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for patient in mc %}
+            <tr class="patient_body">
+                <td class="patient_id">{{patient.user.id}}</td>
+                <td class="patient_name">{{patient.user.name}}</td>
+                <td>{{patient.user.gender}}</td>
+                <td>{{patient.user.address}}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="{{url_for('static', filename='js/medicalCertificate.js')}}"></script>
+{% endblock %}

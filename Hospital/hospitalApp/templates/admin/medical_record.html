@@ -1,0 +1,60 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<style>
+    .medical_record-item{
+        display:flex;
+        justify-content: space-around
+    }
+</style>
+
+<h1 class="text-center text-success">Hồ sơ khám bệnh</h1>
+
+{% if medicalRecord %}
+<div class="medical_record">
+    <div class="medical_record-item">
+         <div class="mb-3 mt-3">
+             <span >Họ tên: </span>
+             <span >{{ medicalRecord.receipt[0].user.name }}</span>
+        </div>
+
+         <div class="mb-3 mt-3">
+             <span >Giới tính: </span>
+             <span >{{ medicalRecord.receipt[0].user.gender }}</span>
+        </div>
+
+        <div class="mb-3 mt-3">
+             <span >Địa chỉ: </span>
+             <span >{{ medicalRecord.receipt[0].user.address }}</span>
+        </div>
+    </div>
+
+     <table class="table col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="font-size: 14px">
+            <thead>
+            <tr>
+                <th colspan="5" style="font-size: 20px">Lịch sử khám bệnh</th>
+            </tr>
+            <tr>
+                <th scope="col">Mã hóa đơn</th>
+                <th scope="col">Ngày khám</th>
+                <th scope="col">Triệu chứng</th>
+                <th scope="col">Bệnh</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rc in medicalRecord.receipt %}
+            <tr class="prescription_body">
+                <td class="prescription_id">{{rc.id}}</td>
+                <td class="prescription_date">{{rc.prescription.created_date}}</td>
+                <td class="prescription_symptom">{{rc.prescription.symptom}}</td>
+                <td class="prescription_symptom">{{rc.prescription.disease_name}}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+</div>
+{% else %}
+    <h3 class="text-danger">Bệnh nhân này chưa từng khám ở đây</h3>
+{% endif %}
+{% endblock %}

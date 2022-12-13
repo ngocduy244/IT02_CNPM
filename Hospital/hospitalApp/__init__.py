@@ -12,13 +12,15 @@ app.secret_key="(J%*(#H#&@*H@**AS*FASBF*ASF&&***@"
 
 app.config["SQLALCHEMY_DATABASE_URI"] ="mysql+pymysql://root:%s@localhost/labhospitaldb?charset=utf8mb4" % quote('Admin@123')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+app.config["CART_KEY"] = 'cart'
+
 # app.config['PAGE_SIZE']=2
 
 
 db = SQLAlchemy(app=app)
 
 
-admin = Admin(app=app, name='Quản trị bán hàng online', template_mode='bootstrap4')
+
 
 cloudinary.config(
         cloud_name="dxqeqad9d",

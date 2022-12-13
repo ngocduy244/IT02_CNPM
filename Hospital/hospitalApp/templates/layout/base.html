@@ -16,6 +16,8 @@
     {% block css %}
     {% endblock %}
     {% block js %}
+
+
     {% endblock %}
 </head>
 <body>
@@ -29,6 +31,8 @@
 {% block footer %}
   {% include 'layout/footer.html' %}
 {% endblock %}
-<script src="{{url_for('static', filename='js/index.js')}}"></script>
+
+   <script src="{{url_for('static', filename='js/index.js')}}"></script>
+
 </body>
 </html>

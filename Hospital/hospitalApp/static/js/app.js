@@ -1,11 +1,9 @@
-// dropdown user role
 const dropdownItem = document.querySelectorAll(".dropdown-list_item")
 const dropdownSelect = document.querySelector(".dropdown-select")
 const dropdownSelected = document.querySelector(".dropdown-selected")
 const dropdownList = document.querySelector(".dropdown-list")
 const dropdown = document.querySelector(".dropdown")
 const inputRole = document.querySelector('.selected-role')
-
 const icon = document.querySelector(".icon")
 
 
@@ -19,7 +17,9 @@ dropdownSelect.addEventListener("click", handleDropdown)
 
 dropdownItem.forEach(item => item.addEventListener("click", function(e){
     dropdownSelected.textContent = item.textContent
+
     inputRole.value = item.textContent
+    console.log(inputRole.value)
     icon.classList.remove("fa-caret-up")
     icon.classList.add("fa-caret-down")
     dropdownList.classList.remove("show")

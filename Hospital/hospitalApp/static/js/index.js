@@ -23,7 +23,7 @@ window.addEventListener("load", function(){
 
     window.addEventListener("scroll",debounceFn(function(e){
         const scrollY = window.pageYOffset
-        console.log(scrollY)
+//        console.log(scrollY)
         if(scrollY >= headerHeight){
             header.classList.add("is-fixed")
         }
@@ -40,7 +40,7 @@ window.addEventListener("load", function(){
     line.className = "line-effect"
     this.document.body.appendChild(line)
     function handleHoverLink(e){
-        console.log(e.target.getBoundingClientRect())
+//        console.log(e.target.getBoundingClientRect())
         const {left, top, width, height} = e.target.getBoundingClientRect()
         const offsetBottom = 5
         line.style.display = "block"

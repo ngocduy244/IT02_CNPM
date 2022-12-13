@@ -1,20 +1,20 @@
 {% extends 'admin/master.html' %}
 
 {% block body %}
-<h1 class="text-center text-success">THỐNG KÊ - BÁO CÁO DOANH THU</h1>
+<h1 class="text-center text-success">THỐNG KÊ - BÁO CÁO Số lượng bệnh nhân</h1>
 
 
 <div class="row">
     <div class="col-md-5 col-sm-12">
-        <table class="table">
+        <table class="table text-center">
             <tr>
                 <th>Tháng</th>
-                <th>Doanh thu</th>
+                <th>Số lượng bệnh nhân</th>
             </tr>
             {% for s in stats %}
             <tr>
                 <td>{{ s[0] }}</td>
-                <td>{{ "{:,.0f}".format(s[1]) }} VND</td>
+                <td>{{ s[1] }}  </td>
             </tr>
             {% endfor %}
         </table>
@@ -22,17 +22,13 @@
     <div class="col-md-7 col-sm-12">
         <form>
             <div class="form-group">
-                <input type="text" placeholder="Nhập từ khóa..."  name="kw" class="form-control">
+                <label>Từ tháng: </label>
+                <input type="text" placeholder="Nhập từ khóa..."  name="from_month" class="form-control">
             </div>
 
             <div class="form-group">
-                <label>Từ ngày: </label>
-                <input type="date" placeholder="Nhập từ khóa..."  name="from_month" class="form-control">
-            </div>
-
-            <div class="form-group">
-                <label>Đến ngày: </label>
-                <input type="date" placeholder="Nhập từ khóa..."  name="to_month" class="form-control">
+                <label>Đến tháng: </label>
+                <input type="text" placeholder="Nhập từ khóa..."  name="to_month" class="form-control">
             </div>
 
             <div>
@@ -54,7 +50,7 @@
 
 
         window.onload = function(){
-            drawRevenueStatsWithPrice(labels, data)
+            drawRevenueStatsWithAmount(labels, data)
         }
     </script>
 </div>

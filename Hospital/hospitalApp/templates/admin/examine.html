@@ -1,0 +1,304 @@
+{% extends 'admin/master.html' %}
+
+
+{% block body %}
+<style>
+    .emxamine_disease{
+        display:flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .emxamine_disease label{
+        margin-bottom:0;
+    }
+
+    .emxamine_disease input{
+        width:50%;
+        margin-left: 2px;
+    }
+
+    .emxamine_disease-symptom,
+    .emxamine_disease-name{
+        display:flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .dropdown-select{
+    padding: 8px 0;
+    border-radius: 4px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+}
+
+.dropdown-list{
+    width: 100%;
+    border-radius: 4px;
+    background-color: White;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: none;
+    transition: opacity 0.2s linear, visibility 0.2s linear;
+}
+
+.dropdown-list_item{
+    padding: 12px;
+}
+
+.dropdown-list_item:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.dropdown-list.show{
+    display: block;
+}
+
+.selected-role{
+    display:none;
+}
+
+    .dropdown-body{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+
+    .dropdown-body h3{
+        margin: 0;
+    }
+
+    .dropdown-body .dropdown-select{
+        border: 1px solid rgba(0,0,0,0.3);
+       padding: 4px 6px;
+
+    }
+
+    .dropdown-body .dropdown-list{
+        width: 60%;
+    }
+
+    .info-patient,
+    .info-disease{
+         display: flex;
+         justify-content: flex-start;
+         align-items: flex-end;
+    }
+
+
+    .table-medicine{
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+
+    .form-medicine{
+         display: flex;
+         justify-content: flex-start;
+    }
+
+
+</style>
+
+
+<div>
+    <div class="row">
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+            <table class="table  text-center">
+                <thead>
+                <tr>
+                    <th class="text-center" colspan="6">Danh sách khám bệnh</th>
+                </tr>
+                <tr>
+                    <th class="text-center" colspan="6">{{date_today}}</th>
+                </tr>
+                <tr style="font-size: 13px">
+                    <th scope="col">Mã bệnh nhân</th>
+                    <th scope="col">Họ tên</th>
+                    <th scope="col">Giới tính</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Hồ sơ khám</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for patient in mc %}
+                <tr class="patient_body">
+                    <td class="patient_id">{{patient.user.id}}</td>
+                    <td class="patient_name">{{patient.user.name}}</td>
+                    <td>{{patient.user.gender}}</td>
+                    <td>{{patient.user.address}}</td>
+                    <td><a class="btn btn-primary add_btn"
+                           href="{{url_for('medical_record', user_id=patient.user.id)}}">Xem</a></td>
+                    <td><a class="btn btn-primary add_btn" href="javascript:;">Thêm</a></td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+             <form class="form-medicine">
+                <input class="input_prescription mr-3 col-lg-7 col-md-7 col-sm-7 col-xs-7" name="keyword" placeholder="Search" type="text">
+                <button class="btn btn-primary col-lg-3 col-md-3 col-sm-3 col-xs-3" type="submit">Search</button>
+            </form>
+
+            <div class="table-medicine">
+                <table class="table text-center mt-3 ">
+                <thead>
+                    <tr>
+                        <th>Mã thuốc</th>
+                        <th>Tên thuốc</th>
+                        <th>Loại thuốc</th>
+                        <th>Đơn vị</th>
+                        <th>Đơn giá</th>
+                    </tr>
+
+                </thead>
+                {% for m in medicine_by_name %}
+                <tr>
+                    <td>{{ m.id }}</td>
+                    <td>{{ m.name }}</td>
+                    <td>{{ m.kind }}</td>
+                    <td>{{ m.unit }}</td>
+                    <td>{{ "{:,.0f}".format(m.price) }} VND</td>
+                </tr>
+                {% endfor %}
+            </table>
+            </div>
+        </div>
+
+
+        <div class="examine col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <h3 class="text-center">Toa thuốc khám bệnh</h3>
+            <h4 class="examine_date text-center">({{date_today}})</h4>
+            <div class="examine_info col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-3">
+                <div class="examine_name">Họ tên bệnh nhân: <span class="name_user"></span></div>
+                <div class="mt-2">Mã bệnh nhân: <span class="user_id"></span></div>
+            </div>
+
+            <div class="emxamine_disease mt-2">
+                <!--                <div class="emxamine_disease-symptom">Triệu chứng: <span class="symptom_user"></span></div>-->
+                <div class="emxamine_disease-symptom col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <label class="form-label " for="symptom">Triệu chứng: </label>
+                    <input class="emxamine_symptom-input" id="symptom" name="symptom" type="text">
+                </div>
+                <div class="emxamine_disease-name col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <label class="form-label " for="disease">Tên bệnh:</label>
+                    <input class="emxamine_disease-input " id="disease" name="disease" type="text">
+                </div>
+
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-4">
+                <a class="btn btn-primary btn-confirm " href="javascript:;" style="width:60%">Xác nhận</a>
+            </div>
+
+            <div class="dropdown mt-5">
+                <div class="dropdown-body">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 mr-2" style="font-size:20px">Thuốc:</div>
+                    <div class="dropdown-select col-lg-4col-md-4 col-sm-4 col-xs-4">
+                        <input class="selected-role" name="role" type="text">
+                        <span class="dropdown-selected">Select Item</span>
+                        <i class="fa fa-caret-down icon"></i>
+                    </div>
+
+                    <button class="btn btn-primary btn-js col-lg-4 col-md-4 col-sm-4 col-xs-4 ml-2" href="javascript:;">Thêm</button>
+
+                </div>
+
+                <div class="dropdown-list">
+                    {% for m in medicine %}
+                    <div class="dropdown-list_item dropdown-list_medicine" data-id={{m.id}} data-kind="{{m.kind}}"
+                         data-name="{{m.name}}"
+                         data-price={{m.price}} data-unit="{{m.unit.name}}">{{ m.name }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <form class="mt-4 mb-4">
+        <h2 class="text-center">Chi tiết toa thuốc</h2>
+        <div class="info-patient">
+            <div class="info-patient-name col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span>Mã bệnh nhân: </span>
+                <input class="input_user_id" id="userIdName" name="id" readonly type="text"/>
+            </div>
+
+            <div class="info-patient-id col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span>Tên bệnh nhân: </span>
+                <input class="input_user_name" id="patientName" name="name" readonly type="text"/>
+            </div>
+        </div>
+
+        <div class="info-disease mt-3">
+            <div class="info-disease_symptom col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span>Triệu chứng: </span>
+                <input class="input_symptom" id="symptomName" name="symptom" readonly type="text"/>
+            </div>
+
+            <div class="info-disease_diseaseName col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span>Bệnh chẩn đoán: </span>
+                <input class="input_disease" id="diseaseName" name="disease" readonly type="text"/>
+            </div>
+        </div>
+
+
+        {% if 'cart' in session and session['cart'] %}
+        <table class="table text-center mt-3">
+            <tr>
+                <th>Mã thuốc</th>
+                <th>Tên thuốc</th>
+                <th>Loại thuốc</th>
+                <th>Đơn vị</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th></th>
+            </tr>
+            {% for p in session['cart'].values() %}
+            <tr id="cart{{p.id}}">
+                <td>{{ p.id }}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.kind }}</td>
+                <td>{{ p.unit }}</td>
+                <td>{{ "{:,.0f}".format(p.price) }} VND</td>
+                <td>
+                    <input class="" min="0" onblur="updateCart({{p.id}}, this)" style="font-size: 15px;" type="number"
+                           value="{{p.quantity}}">
+                </td>
+                <td>
+                    <input class="btn btn-danger" onclick="deleteCart({{p.id}})" type="button" value="Xóa">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">
+            <input class="btn btn-success " onclick="pay()" style="width: 60%" type="submit" value="Xác nhận">
+        </div>
+    </form>
+    <span class="cart-counter">{{ cart.total_quantity }}</span>
+    <span class="cart-amount">{{ "{:,.0f}".format(cart.total_amount) }}</span>
+
+    {% endif %}
+</div>
+
+
+
+
+<script src="{{url_for('static', filename='js/app.js')}}"></script>
+<script src="{{url_for('static', filename='js/cart.js')}}"></script>
+<script src="{{url_for('static', filename='js/addPatient.js')}}"></script>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<style>
+    .btn-add-receipt{
+        display:flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .info-patient  tr,
+    .info-patient  td{
+        border: 1px solid #333;
+    }
+</style>
+
+{% if err_msg %}
+<div class="alert alert-danger">
+    <h4>{{err_msg}}</h4>
+</div>
+{%endif%}
+
+<h2 class="text-success notify-success"></h2>
+<h2 class="text-danger notify-error"></h2>
+
+<div class="container-body">
+    <h2 class="text-center">Thanh toán hóa đơn</h2>
+    <form class="form-prescription">
+        <h3>Nhập mã toa thuốc: </h3>
+        <input class="input_prescription" name="prescription_id" placeholder="Search" type="text">
+        <button class="btn btn-primary " type="submit">Search</button>
+    </form>
+</div>
+
+<div class="receipt_body mb-4">
+    {% if prescription %}
+    <table class="table mt-5  info-patient">
+        <tr>
+            <td><span style="font-weight: bold">Tên bệnh nhân: </span>{{ prescription.user.name }}</td>
+            <td><span style="font-weight: bold">Địa chỉ: </span>{{ prescription.user.address }}</td>
+        </tr>
+         <tr>
+             <td><span style="font-weight: bold">Mã bệnh nhân: </span> <span id="patient_id">{{ prescription.user_id }}</span></td>
+             <td><span style="font-weight: bold">Mã toa thuốc: </span><span id="prescription_id">{{ prescription.id }}</span></td>
+        </tr>
+    </table>
+
+    <table class="table mt-5 text-center">
+        <thead>
+        <tr>
+            <th class="text-center" colspan="6">Hóa đơn</th>
+        </tr>
+        <tr>
+            <th class="text-center" colspan="6">{{date_today}}</th>
+        </tr>
+        <tr>
+            <th scope="col">Mã thuốc</th>
+            <th scope="col">Tên thuốc</th>
+            <th scope="col">Loại</th>
+            <th scope="col">Đơn vị</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Đơn giá</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for pd in prescription.prescription_details %}
+        <tr>
+            <td id="medicine_id">{{pd.medicine.id}}</td>
+            <td id="medicine_name">{{pd.medicine.name}}</td>
+            <td id="medicine_kind">{{pd.medicine.kind}}</td>
+            <td id="medicine_unit">{{pd.medicine.unit.name}}</td>
+            <td id="medicine_quantity">{{pd.quantity}}</td>
+            <td id="medicine_price">{{pd.price}}</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="text-center" colspan="3">Tổng tiền thuốc</td>
+            <td class="text-center" colspan="3">{{ "{:,.0f}".format(total_price)}}</td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="3">Tiền khám bệnh</td>
+            <td class="text-center" colspan="3">{{ "{:,.0f}".format(rule.amount)}}</td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="3">Tổng tiền</td>
+            <td class="text-center" colspan="3">{{ "{:,.0f}".format(total)}}</td>
+        </tr>
+        </tfoot>
+    </table>
+
+
+    <input id="medicine_total_price" name="total" style="display:none" type="text" value={{total}}>
+    <button class="btn btn-primary btn-add-receipt col-lg-6 col-md-6 col-sm-6 col-xs-6" onclick="saveReceipt()">Submit</button>
+
+
+    {% endif %}
+</div>
+<script src="{{url_for('static', filename='js/receipt.js')}}"></script>
+{% endblock %}
