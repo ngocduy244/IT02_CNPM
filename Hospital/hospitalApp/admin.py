@@ -17,21 +17,6 @@ class AuthenticatedView(BaseView):
         return current_user.is_authenticated
 
 
-# class ProductView(AuthenticatedModelView):
-#     column_searchable_list = ['name', 'description']
-#     column_filters = ['name', 'price']
-#     can_view_details = True
-#     column_exclude_list = ['image', 'description']
-#     can_export = True
-#     column_export_list = ['id', 'name', 'description', 'price']
-#     column_labels = {
-#         'name': 'Tên sản phẩm',
-#         'description': 'Mô tả',
-#         'price': 'Gía'
-#     }
-#     page_size = 5
-
-
 class StatsView(AuthenticatedView):
     @expose('/')
     def index(self):
