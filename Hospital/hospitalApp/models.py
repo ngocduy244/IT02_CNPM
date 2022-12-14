@@ -129,13 +129,92 @@ if __name__ == '__main__':
     with app.app_context():
         # db.create_all()
 
-        #
+
+
+        k1 = Kind(name="Thuốc hạ sốt")
+        k2 = Kind(name="Thuốc ho")
+        k3 = Kind(name="Thuốc nhỏ mắt")
+
+        db.session.add_all([k1,k2,k3])
+        db.session.commit()
+
+        unit1 = Unit(name="Viên")
+        unit2 = Unit(name="Chai")
+        unit3 = Unit(name="Vĩ")
+
+        db.session.add_all([unit1, unit2, unit3])
+        db.session.commit()
+
+        m1 = Medicine(name="Aspirin", price=1400, unit_id=1, kind_id=1)
+        m2 = Medicine(name="Paracetamol", price=10000, unit_id=3, kind_id=1)
+        m3 = Medicine(name="Prospan", price=45000, unit_id=2, kind_id=2)
+        m4 = Medicine(name="Rohto Vita", price=30000, unit_id=2, kind_id=3)
+
+        db.session.add_all([m1, m2, m3, m4])
+        db.session.commit()
+
+        r1 = Rule(name="Số lượng bệnh nhân", amount=30)
+        r2 = Rule(name="Số tiền khám", amount=150000)
+
+        db.session.add_all([r1, r2])
+        db.session.commit()
+
         import hashlib
         password = str(hashlib.md5('1'.encode('utf-8')).hexdigest())
-        u = User(name='user', username='user', password=password, birthday = date(2002,2,24),user_role=UserRole.USER, address='fff', phone='2214124',gender="Nữ",
-                 identity_card='208145851234', avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
-        db.session.add(u)
+        u1 = User(name='Lý Nguyễn Ngọc Duy', username='admin', password=password, birthday = date(1994,7,22),user_role=UserRole.ADMIN, address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124',gender="Nam",
+                identity_card='205105201900',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u2 = User(name='Đào Minh Phố', username='doctor', password=password, birthday=date(1985, 5, 2), user_role=UserRole.DOCTOR,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nam",
+                  identity_card='208146851234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u3 = User(name='Nguyễn Phạm Ngọc Phú', username='nurse', password=password, birthday=date(2000, 2, 24), user_role=UserRole.NURSE,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nữ",
+                  identity_card='208145977234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u4 = User(name='Trấn Quang Khánh', username='employee', password=password, birthday=date(1999, 3, 6), user_role=UserRole.EMPLOYEE,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nam",
+                  identity_card='208141551234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u5 = User(name='user', username='user', password=password, birthday=date(2001, 2, 2), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nữ",
+                  identity_card='208146251234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u6 = User(name='user', username='user1', password=password, birthday=date(2001, 6, 27), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nam",
+                  identity_card='208142451234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u7 = User(name='user', username='user2', password=password, birthday=date(2000, 5, 12), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nam",
+                  identity_card='208142371234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u8 = User(name='user', username='user3', password=password, birthday=date(2002, 7, 12), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nữ",
+                  identity_card='208185851234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u9 = User(name='user', username='user4', password=password, birthday=date(2005, 7, 21), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nam",
+                  identity_card='208145854134',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+        u10 = User(name='user', username='user5', password=password, birthday=date(2001, 12, 22), user_role=UserRole.USER,
+                  address='371 Nguyễn Kiệm, Gò Vấp', phone='2214124', gender="Nữ",
+                  identity_card='208125751234',
+                  avatar='https://res.cloudinary.com/dxxwcby8l/image/upload/v1646729569/fi9v6vdljyfmiltegh7k.jpg')
+
+
+        db.session.add_all([u1,u2,u3,u4,u5,u6,u7,u8,u9,u10])
         db.session.commit()
+
+
 
 
 
