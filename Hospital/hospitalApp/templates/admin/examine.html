@@ -108,6 +108,12 @@
          justify-content: flex-start;
     }
 
+    .table-patient{
+        max-height:500px;
+        overflow-y:scroll;
+        margin-bottom: 50px;
+    }
+
 
 </style>
 
@@ -115,7 +121,8 @@
 <div>
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-            <table class="table  text-center">
+            <div class="table-patient">
+                <table class="table  text-center">
                 <thead>
                 <tr>
                     <th class="text-center" colspan="6">Danh sách khám bệnh</th>
@@ -147,6 +154,8 @@
 
                 </tbody>
             </table>
+            </div>
+
 
 
              <form class="form-medicine">

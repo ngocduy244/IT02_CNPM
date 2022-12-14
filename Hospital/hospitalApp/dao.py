@@ -118,6 +118,12 @@ def load_user_by_id(user_id):
     return User.query.filter(User.id.__eq__(user_id)).first()
 
 
+def load_user(user_id = None,user_identity_card=None):
+    if user_id:
+        return User.query.filter(User.id.__eq__(user_id)).first()
+    if user_identity_card:
+        return User.query.filter(User.identity_card.__eq__(user_identity_card)).first()
+
 
 def load_medicalCertificate(date=None):
     if date:
@@ -226,14 +232,13 @@ def stats_revenue_month(from_month=None, to_month=None):
     return data.all()
 
 def statistic_medicine_using_frequency_month(from_month=None, to_month=None, keyword=None):
-    data = db.session.query(func.month(Prescription.created_date),
+    data = db.session.query(func.month(Receipt.created_date),
                             func.sum(PrescriptionDetails.quantity)) \
-        .join(Prescription) \
-        .filter(Prescription.id == PrescriptionDetails.prescription_id) \
-        .join(Medicine) \
-        .filter(Medicine.id == PrescriptionDetails.medicine_id) \
-        .group_by(func.month(Prescription.created_date)) \
-        .order_by(func.month(Prescription.created_date))
+        .join(Receipt, Receipt.prescription_id.__eq__(PrescriptionDetails.prescription_id)) \
+        .join(Prescription, Prescription.id.__eq__(PrescriptionDetails.prescription_id)) \
+        .join(Medicine, Medicine.id == PrescriptionDetails.medicine_id) \
+        .group_by(func.month(Receipt.created_date)) \
+        .order_by(func.month(Receipt.created_date))
 
 
     if keyword:
@@ -249,10 +254,11 @@ def statistic_medicine_using_frequency_month(from_month=None, to_month=None, key
 
 
 def statistic_medical_examination_month(from_month=None, to_month=None):
-    data = db.session.query(func.month(Prescription.created_date),
+    data = db.session.query(func.month(Receipt.created_date),
                             func.count(Prescription.id)) \
-        .group_by(func.month(Prescription.created_date)) \
-        .order_by(func.month(Prescription.created_date))
+        .join(Receipt, Receipt.prescription_id.__eq__(Prescription.id)) \
+        .group_by(func.month(Receipt.created_date)) \
+        .order_by(func.month(Receipt.created_date))
 
 
     if from_month and to_month:

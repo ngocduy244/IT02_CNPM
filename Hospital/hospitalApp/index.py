@@ -14,7 +14,6 @@ app.add_url_rule('/api/cart', 'add-cart', controllers.add_to_cart, methods=['pos
 app.add_url_rule('/api/cart/<medicine_id>', 'update-cart', controllers.update_cart,  methods=['put'])
 app.add_url_rule('/api/cart/<medicine_id>', 'delete-cart', controllers.delete_cart,  methods=['delete'])
 app.add_url_rule('/api/prescription', 'create-prescription', controllers.create_prescription,  methods=['post', 'get'])
-app.add_url_rule('/api/user', 'user_detail', controllers.user_detail,  methods=['post'])
 app.add_url_rule('/api/receipt', 'save_receipt', controllers.save_receipt, methods=['post'])
 app.add_url_rule('/api/medicalCertificate', 'save_PKB', controllers.save_PKB, methods=['post'])
 app.add_url_rule('/login', 'login_my_user', controllers.login_my_user, methods=['get', 'post'])

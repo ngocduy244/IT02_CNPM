@@ -25,47 +25,12 @@ if(confirm("Bạn chắc chắn lưu chứ?")){
                location.reload()
            }
 
+           else if(data.status===206){
+               alert(` Số lượng bệnh nhân đã vượt ${data.amount} người`)
+               location.reload()
+           }
+
         })
 }}
 
-function checkUser(){
-        userID = document.querySelector(".user-id").value
-        fetch('/api/user', {
-        method: "post",
-        body: JSON.stringify({
-            "userID": userID,
-           }),
-           headers: {
-            "Content-Type": "application/json"
-           }
-        }).then(function(res){
-            return res.json()
-        }).then(function(data){
-            if(data.status === 200){
-                let u = data.user
-                let d = document.querySelector('.table')
-                d.innerHTML = `
-                     <tr class="">
-                          <th cope="col">Mã bệnh nhân</th>
-                          <th cope="col">Tên bệnh nhân</th>
-                          <th cope="col">Giới tính</th>
-                      </tr>
-                `
 
-                h = `
-                    <tr>
-                        <td> ${u.id} </td>
-                        <td> ${u.name} </td>
-                        <td> ${u.gender} </td>
-                    </tr>
-                `
-
-                d.insertAdjacentHTML("beforeEnd", h)
-            }
-
-            else if(data.status===500){
-                alert("Không có bệnh nhân mà bạn tìm")
-                location.reload()
-            }
-        })
-}

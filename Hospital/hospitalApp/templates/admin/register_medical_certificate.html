@@ -4,13 +4,14 @@
 <style>
     .info_user,
     .examine_date,
-    .btn-request{
+    .btn-request,
+    .indentity{
         display:flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
     }
 
-    .info_user label{
+    label{
         margin-bottom: 0;
     }
 
@@ -28,12 +29,21 @@
 
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-        <form>
-            <div class="info_user">
-                <label class="form-label col-lg-3 col-md-3 col-sm-3 col-xs-3">User ID:</label>
-                <input class="form-control user-id col-lg-9 col-md-9 col-sm-9 col-xs-9" name="user_id"
-                       placeholder="Nhập mã bệnh nhân" style="font-size: 14px" type="text">
-            </div>
+            <form>
+                <div class="info_user mb-3">
+                    <label class="form-label col-lg-3 col-md-3 col-sm-3 col-xs-3">User ID:</label>
+                    <input class="form-control user-id col-lg-9 col-md-9 col-sm-9 col-xs-9" name="user_id"
+                           placeholder="Nhập mã bệnh nhân" style="font-size: 14px" type="text">
+                </div>
+
+                <div class="indentity">
+                    <label class="form-label col-lg-3 col-md-3 col-sm-3 col-xs-3">CMND:</label>
+                    <input class="form-control user-id col-lg-9 col-md-9 col-sm-9 col-xs-9" id="identity_card"
+                           name="identity_card" placeholder="Nhập mã bệnh nhân" style="font-size: 14px" type="text">
+                </div>
+
+
+
 
             <div class="examine_date mt-3 mb-3">
                 <label class="form-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="examine_date">Ngày khám:</label>
@@ -42,9 +52,10 @@
             </div>
 
             <div class="btn-request">
-                <a class="btn btn-success col-lg-4 col-md-4 col-sm-4 col-xs-4" onclick="checkUser()"> Kiểm tra </a>
+                <input class="btn btn-success col-lg-4 col-md-4 col-sm-4 col-xs-4" type="submit" value="Kiểm tra"/>
                 <a class="btn btn-success col-lg-4 col-md-4 col-sm-4 col-xs-4 ml-1" onclick="saveMC()"> Xác nhận </a>
             </div>
+
         </form>
 
         <table class="table col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center mt-3" style="font-size: 13px;">
@@ -53,6 +64,17 @@
                 <th cope="col">Tên bệnh nhân</th>
                 <th cope="col">Giới tính</th>
             </tr>
+            {% if user %}
+            <tr>
+                <td> {{user.id}} </td>
+                <td> {{user.name}} </td>
+                <td> {{user.gender}} </td>
+            </tr>
+            {% else %}
+             <tr>
+                <td colspan="3"><h5 class="text-danger">Không có bệnh nhân mà bạn tìm</h5></td>
+            </tr>
+            {% endif %}
 
         </table>
     </div>

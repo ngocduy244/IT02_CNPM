@@ -1,5 +1,5 @@
 from hospitalApp import admin, db, app, dao
-from hospitalApp.models import  User, UserRole, Medicine, MedicalCertificate, Rule, Prescription, PrescriptionDetails
+from hospitalApp.models import  User, UserRole, Medicine, Rule, Kind, Unit
 from flask_admin import Admin, BaseView, expose , AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask import redirect, render_template, request, jsonify
@@ -85,7 +85,9 @@ class registerMedicalCertificateView(AuthenticatedView):
     def index(self):
         date_today = date.today()
         mc = dao.load_medicalCertificate(date_today)
-        return self.render('admin/register_medical_certificate.html', mc=mc, date_today=date_today)
+        user_id = (request.args.get('user_id'))
+        user = dao.load_user(user_identity_card=request.args.get('identity_card'), user_id=user_id)
+        return self.render('admin/register_medical_certificate.html', mc=mc, date_today=date_today, user=user)
 
     def is_accessible(self):
         return current_user.is_authenticated and current_user.user_role == UserRole.NURSE
@@ -149,18 +151,17 @@ class receiptView(AuthenticatedView):
 
 
 
-admin = Admin(app=app, name='Quản trị bán hàng', template_mode='bootstrap4', index_view=AdminView())
+admin = Admin(app=app, name='Quản trị Phòng khám', template_mode='bootstrap4', index_view=AdminView())
 admin.add_view(AuthenticatedModelView(User, db.session, name="Người dùng"))
 admin.add_view(AuthenticatedModelView(Medicine, db.session, name="Thuốc"))
-admin.add_view(AuthenticatedModelView(MedicalCertificate, db.session, name="PKB"))
-admin.add_view(AuthenticatedModelView(Prescription, db.session, name="Toa thuốc"))
-admin.add_view(AuthenticatedModelView(PrescriptionDetails, db.session, name="chi tiết toa"))
+admin.add_view(AuthenticatedModelView(Kind, db.session, name="Loại"))
+admin.add_view(AuthenticatedModelView(Unit, db.session, name="Đơn vị"))
 admin.add_view(AuthenticatedModelView(Rule, db.session, name="Quy định"))
 admin.add_view(registerAccountView(name="Đang kí người dùng"))
 admin.add_view(registerMedicalCertificateView(name="Đang kí phiếu khám bệnh"))
 admin.add_view(ExamineView(name="Khám bệnh"))
 admin.add_view(receiptView(name="Thanh toán hóa đơn"))
 admin.add_view(StatsPatientView(name='Thống kê bệnh nhân'))
-admin.add_view(StatsMedicineView(name='Thống kê - báo cáo Thuốc'))
-admin.add_view(StatsView(name='Thống kê - báo cáo'))
+admin.add_view(StatsMedicineView(name='Thống kê Thuốc'))
+admin.add_view(StatsView(name='Thống kê'))
 admin.add_view(LogoutView(name='Đăng xuất'))

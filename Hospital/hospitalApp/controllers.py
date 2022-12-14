@@ -65,7 +65,6 @@ def add_to_cart():
 
     session[key] = cart
 
-    # đặt thuốc vào giỏ
     return jsonify(utils.cart_stats(cart))
 
 
@@ -78,7 +77,6 @@ def update_cart(medicine_id):
 
     session[key] = cart
 
-    # đặt thuốc vào giỏ
     return jsonify(utils.cart_stats(cart))
 
 
@@ -91,7 +89,6 @@ def delete_cart(medicine_id):
 
     session[key] = cart
 
-    # đặt thuốc vào giỏ
     return jsonify(utils.cart_stats(cart))
 
 def create_prescription():
@@ -116,25 +113,7 @@ def create_prescription():
             return jsonify({'status': 200})
 
 
-def user_detail():
-    user_id = int(request.json['userID'])
 
-    if dao.load_user_by_id(user_id):
-        try:
-           user = dao.get_user_by_id(user_id=user_id)
-        except:
-            return jsonify({'status': 500})
-        else:
-            return jsonify({
-                'status': 200,
-                'user': {
-                    "id": user.id,
-                    "name": user.name,
-                    "gender": user.gender,
-                }
-            })
-    else:
-        return jsonify({'status': 500})
 
 
 
@@ -149,12 +128,6 @@ def save_receipt():
        return  jsonify({'status': 204})
 
     else:
-    #     if dao.load_medical_record_by_user_id(user_id):
-    #         dao.create_MedicalRecord_have(user_id=user_id, prescription_id=prescription_id, total=total)
-    #     else:
-    #         dao.create_MedicalRecord(user_id=user_id, prescription_id=prescription_id, total=total)
-    # return redirect('/receipt')
-
         try:
             if dao.load_medical_record_by_user_id(user_id):
                 dao.create_MedicalRecord_have(user_id=user_id, prescription_id=prescription_id, total=total)
@@ -167,16 +140,17 @@ def save_receipt():
 
 
 def save_PKB():
-    err_msg = ""
     examines_date = request.json["date"]
-    # symptom = request.form.get("symptom")
     user_id = int(request.json["userID"])
     count = dao.count_mc_date(examines_date)
     rule = dao.get_rule_by_id(1)
+    amount = int(rule.amount)
 
     if (count == rule.amount):
-        err_msg = "Số lường PKB đã vượt quá " + str(int(rule.amount)) + " người"
-        return jsonify({'status': 206})
+        return jsonify({
+            'status': 206,
+             'amount': amount
+        })
 
     else:
         if dao.load_medicalCertificate_By_date_id(date=examines_date, user_id=int(user_id)):
@@ -206,7 +180,7 @@ def login_my_user():
             user = dao.auth_user(username,password, role)
             if user:
                 login_user(user=user)
-                if(current_user.user_role == UserRole.ADMIN):
+                if(current_user.user_role == UserRole.ADMIN or current_user.user_role == UserRole.NURSE or current_user.user_role == UserRole.EMPLOYEE or current_user.user_role == UserRole.DOCTOR):
                     return redirect('/admin')
                 return redirect(url_for('index'))
             else:
