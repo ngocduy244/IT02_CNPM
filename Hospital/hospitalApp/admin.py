@@ -38,6 +38,7 @@ class StatsMedicineView(AuthenticatedView):
 
 
 class StatsPatientView(AuthenticatedView):
+
     @expose('/')
     def index(self):
         stats = dao.statistic_medical_examination_month(from_month=(request.args.get('from_month')),
@@ -135,11 +136,27 @@ class receiptView(AuthenticatedView):
         return current_user.is_authenticated and current_user.user_role == UserRole.EMPLOYEE
 
 
+class MedicineView(AuthenticatedModelView):
+    column_searchable_list = ['name']
+    column_filters = ['name', 'price']
+    can_view_details = True
+    can_export = True
+    column_export_list = ['id', 'name', 'price']
+
+
+class MedicineKindView(AuthenticatedModelView):
+    column_searchable_list = ['name']
+    column_filters = ['name']
+    can_view_details = True
+    can_export = True
+    column_export_list = ['id', 'name']
+
+
 
 admin = Admin(app=app, name='Quản trị Phòng khám', template_mode='bootstrap4', index_view=AdminView())
 admin.add_view(AuthenticatedModelView(User, db.session, name="Người dùng"))
-admin.add_view(AuthenticatedModelView(Medicine, db.session, name="Thuốc"))
-admin.add_view(AuthenticatedModelView(Kind, db.session, name="Loại"))
+admin.add_view(MedicineView(Medicine, db.session, name="Thuốc"))
+admin.add_view(MedicineKindView(Kind, db.session, name="Loại"))
 admin.add_view(AuthenticatedModelView(Unit, db.session, name="Đơn vị"))
 admin.add_view(AuthenticatedModelView(Rule, db.session, name="Quy định"))
 admin.add_view(registerAccountView(name="Đang kí người dùng"))
